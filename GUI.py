@@ -139,7 +139,7 @@ def main():
         mainData = gui_main.getData()
         gui_core.createBlock(losses=False)
         gui_foil.createBlock(losses=True)
-        gui_tubes.createBblock()
+        gui_tubes.createBlock()
         gui_disk.createBlock(losses=True)
         pass
     

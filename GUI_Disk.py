@@ -7,6 +7,7 @@ Created on Sun Nov 27 12:55:15 2022
 """
 
 import tkinter as tk
+import bloque as bk
 
 class Gui_Disk:
     
@@ -71,6 +72,16 @@ class Gui_Disk:
         self.em = tk.StringVar()
         em_entry = tk.Entry(win, textvariable=self.em)
         label32 = tk.Label(win, text="p.u.")
+
+        label13 = tk.Label(win, text="Inner air velocity:")
+        self.aiv = tk.StringVar()
+        aiv_entry = tk.Entry(win, textvariable=self.aiv)
+        label33 = tk.Label(win, text="m/s")
+
+        label14 = tk.Label(win, text="Outer side air velocity:")
+        self.aev = tk.StringVar()
+        aev_entry = tk.Entry(win, textvariable=self.aev)
+        label34 = tk.Label(win, text="m/s")
         
             
         label1.grid(column=0, row=0, sticky="E")
@@ -121,6 +132,14 @@ class Gui_Disk:
         em_entry.grid(column=1, row=11, sticky="WE")
         label32.grid(column=2, row=11, sticky="W")
 
+        label13.grid(column=0, row=12, sticky="E")
+        aiv_entry.grid(column=1, row=12, sticky="WE")
+        label33.grid(column=2, row=12, sticky="W")
+
+        label14.grid(column=0, row=13, sticky="E")
+        aev_entry.grid(column=1, row=13, sticky="WE")
+        label34.grid(column=2, row=13, sticky="W")
+
     def newData(self):
         self.dim.set("")
         self.dom.set("")
@@ -134,6 +153,8 @@ class Gui_Disk:
         self.wel.set("")
         self.rt.set("")
         self.em.set("")
+        self.aiv.set("")
+        self.aev.set("")
         
     def getData(self):
         lista = list()
@@ -149,6 +170,8 @@ class Gui_Disk:
         lista.append(self.wel.get())
         lista.append(self.rt.get())
         lista.append(self.em.get())
+        lista.append(self.aiv.get())
+        lista.append(self.aev.get())
         return lista
     
     def setData(self, lista):
@@ -164,6 +187,46 @@ class Gui_Disk:
         self.wel.set(lista[9])
         self.rt.set(lista[10])
         self.em.set(lista[11])
+        self.aiv.set(lista[12])
+        self.aev.set(lista[13])
         
     def createBlock(self,losses):
-        pass
+        
+        bl = bk.Bloque()
+        
+        bk.contadorBloques = bk.contadorBloques + 1
+        bl.nInd = bk.contadorBloques
+        
+        bl.tAmb = 273.0 + 20.0
+        
+        bl.diamInt = float(self.dim.get()) / 1000.0
+        
+        bl.diamExt = float(self.dom.get()) / 1000.0
+        
+        bl.alt = float(self.wh.get()) / 1000.0
+        bl.areaInt = 3.141592 * bl.diamInt * bl.alt
+        bl.areaExt = 3.141592 * bl.diamExt * bl.alt
+        
+        bl.emisiv = float(self.em.get())
+        
+        bl.pesoFe = 0.0
+        if self.cm.get() == "Cu":
+            bl.pesoCu = float(self.cbw.get()) / 3.0
+        else:
+            bl.pesoAl = float(self.cbw.get()) / 3.0
+        bl.pesoAisl = (float(self.tww.get()) - float(self.cbw.get())) / 3.0
+        
+        if losses:
+            bl.pkOhm = float(self.wol.get()) / 3.0
+            bl.pkAdi = float(self.wel.get()) / 3.0
+        
+        bl.tRef = float(self.rt.get())
+        bl.temp = 273.0 + 20.0
+        bl.incTemp = 1000.0
+        
+        bl.pk = 0.0
+        bl.pConv = 0.0
+        bl.pRad = 0.0
+        
+        bl.velAirInt = float(self.aiv.get())
+        bl.velAirExt = float(self.aev.get())
