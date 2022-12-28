@@ -19,7 +19,7 @@ import GUI_Core
 import GUI_Foil
 import GUI_Tubes
 import GUI_Disk
-import bloque
+import bloque as bk
 
 def main():
     root = tk.Tk()
@@ -127,6 +127,11 @@ def main():
     menu_bar.add_cascade(label="Execute", menu=menu2)
 
     def noLoadTest():
+        for bl in bk.bloques:
+            del bl
+        bk.contadorBloques = 0
+        bk.bloques=[]
+        
         mainData = gui_main.getData()
         gui_core.createBlock(losses=True)
         gui_foil.createBlock(losses=False)
@@ -136,6 +141,11 @@ def main():
     menu2.add_command(label="Run No Load Test", command = noLoadTest)
     
     def onLoadTest():
+        for bl in bk.bloques:
+            del bl
+        bk.contadorBloques = 0
+        bk.bloques=[]
+
         mainData = gui_main.getData()
         gui_core.createBlock(losses=False)
         gui_foil.createBlock(losses=True)
@@ -145,6 +155,11 @@ def main():
     menu2.add_command(label="Run On Load Test", command = onLoadTest)
     
     def serviceTest():
+        for bl in bk.bloques:
+            del bl
+        bk.contadorBloques = 0
+        bk.bloques=[]
+
         mainData = gui_main.getData()
         gui_core.createBlock(losses=True)
         gui_foil.createBlock(losses=True)
@@ -154,7 +169,7 @@ def main():
     menu2.add_command(label="Run Service Test", command = serviceTest)
 
     def saveBlocks():
-        bloque.guardaBloques()
+        bk.guardaBloques()
     
     menu2.add_command(label="Save Blocks", command = saveBlocks)
 

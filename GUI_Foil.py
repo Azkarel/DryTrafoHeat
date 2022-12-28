@@ -326,9 +326,12 @@ class Gui_Foil:
             bl.pConv = 0.0
             bl.pRad = 0.0
             
-            bl.velAirInt = float(self.aiv.get())
-            bl.velAirChn = float(self.acchv.get())
-            bl.velAirExt = float(self.aev.get())
+            bl.velAirInt = float(self.acchv.get())
+            bl.velAirExt = float(self.acchv.get())
+            if n == 0:
+                bl.velAirInt = float(self.aiv.get())
+            if n == int(self.cchn.get()):
+                bl.velAirExt = float(self.aev.get())
 
             numEspBlkInicio = numEspBlkFin + 1
             numEspAccum = numEspAccum + numEspBlk

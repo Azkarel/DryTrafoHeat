@@ -38,7 +38,6 @@ class Bloque(object):
         self.pConv = 0.0
         self.pRad = 0.0
         self.velAirInt = 0.0
-        self.velAirChn = 0.0
         self.velAirExt = 0.0
 
 
@@ -270,7 +269,6 @@ def guardaBloques():
             lista.append(bl.pConv)
             lista.append(bl.pRad)
             lista.append(bl.velAirInt)
-            lista.append(bl.velAirChn)
             lista.append(bl.velAirExt)
             
             csv_writer.writerow(lista)

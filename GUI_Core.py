@@ -194,8 +194,8 @@ class Gui_Core:
         bl.areaExt = 2.0 * (float(self.mw.get()) + 
                             float(self.sh.get())) * bl.alt / 1000.0
         bl.emisiv = float(self.em.get())
-        a = float(self.wh.get()) / (3.0 * float(self.wh.get()) + 2 * (2 * float(self.cc.get()))
-                                    + float(self.mw.get()))
+        a = (float(self.wh.get()) / (3.0 * float(self.wh.get()) + 
+             2 * (2 * float(self.cc.get())) + float(self.mw.get())))
         bl.pesoFe = a * float(self.w.get())
         bl.pesoAl = 0.0
         bl.pesoCu = 0.0
@@ -209,7 +209,7 @@ class Gui_Core:
         bl.pk = 0.0
         bl.pConv = 0.0
         bl.pRad = 0.0
-        bl.velAirChn = float(self.achv.get())
+        bl.velAirInt = float(self.achv.get())
         bl.velAirExt = float(self.aev.get())
         
         bk.bloques.append(bl)
