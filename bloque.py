@@ -4,7 +4,9 @@ Created on Tue Oct 11 13:04:10 2022
 
 @author: antonio
 """
+from tkinter import filedialog
 import math
+import csv
 
 import air
 
@@ -13,6 +15,7 @@ bloques = []
 contadorBloques = 0
 
 class Bloque(object):
+    
     def __init__(self):
         self.nInd = 0
         self.tAmb = 0.0
@@ -38,8 +41,10 @@ class Bloque(object):
         self.velAirChn = 0.0
         self.velAirExt = 0.0
 
+
     #  Calculo de las perdidas disipadas por conveccion en AN
     #########################################################
+    
     def perdidasConveccionAN(self):
         
         #  Calculo del coeficiente de transmisión de calor de la sup. int.
@@ -89,9 +94,11 @@ class Bloque(object):
         pConvExt = alfaExt * (self.temp - self.tAmb) * self.areaExt
         
         return(pConvInt + pConvExt)
+
         
     #  Calculo de las perdidas disipadas por conveccion en AF
     #########################################################
+    
     def perdidasConveccionAF(self):
         
         #  Calculo del coeficiente de transmisión de calor de la sup. int.
@@ -144,9 +151,11 @@ class Bloque(object):
         pConvExt = alfaExt * (self.temp - self.tAmb) * self.areaExt
         
         return(pConvInt + pConvExt)
+
         
     #  Calculo de las perdidas disipadas por radiación        
-    #########################################################
+    ##################################################
+    
     def perdidasRadiacion(self):
         
         stefan_boltzmann = 5.6704e-8
@@ -186,7 +195,10 @@ class Bloque(object):
         
         return(pRadInt + pRadExt)
     
+    
     #  Calculo del incremento de temperatura del bloque después de s segundos
+    #########################################################################
+    
     def actualizaTemp(self, regimen, s):
         
         #  Corrección de las perdidas del bloque con su temperatura
@@ -223,4 +235,44 @@ class Bloque(object):
         
         self.incTemp = s * pInternas / calorEspecif
         
-   
+        
+# Guarda los bloques en un fichero csv
+######################################
+    
+def guardaBloques():
+    
+    filename = filedialog.asksaveasfilename(defaultextension=".blk", filetypes=[("bloques", ".blk")])
+
+    with open(filename, "w", newline='') as csv_file:
+        csv_writer = csv.writer(csv_file, dialect="excel")
+        
+        for bl in bloques:
+            
+            lista = list()
+            lista.append(bl.nInd)
+            lista.append(bl.tAmb)
+            lista.append(bl.diamInt)
+            lista.append(bl.diamExt) 
+            lista.append(bl.alt) 
+            lista.append(bl.areaInt) 
+            lista.append(bl.areaExt) 
+            lista.append(bl.emisiv) 
+            lista.append(bl.pesoFe) 
+            lista.append(bl.pesoAl) 
+            lista.append(bl.pesoCu)
+            lista.append(bl.pesoAisl)
+            lista.append(bl.pkOhm)
+            lista.append(bl.pkAdi)
+            lista.append(bl.tRef)
+            lista.append(bl.temp)
+            lista.append(bl.incTemp)
+            lista.append(bl.pk)
+            lista.append(bl.pConv)
+            lista.append(bl.pRad)
+            lista.append(bl.velAirInt)
+            lista.append(bl.velAirChn)
+            lista.append(bl.velAirExt)
+            
+            csv_writer.writerow(lista)
+
+        

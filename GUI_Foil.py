@@ -332,3 +332,5 @@ class Gui_Foil:
 
             numEspBlkInicio = numEspBlkFin + 1
             numEspAccum = numEspAccum + numEspBlk
+                    
+            bk.bloques.append(bl)

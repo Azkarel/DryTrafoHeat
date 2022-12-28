@@ -230,3 +230,5 @@ class Gui_Disk:
         
         bl.velAirInt = float(self.aiv.get())
         bl.velAirExt = float(self.aev.get())
+                
+        bk.bloques.append(bl)

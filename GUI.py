@@ -19,6 +19,7 @@ import GUI_Core
 import GUI_Foil
 import GUI_Tubes
 import GUI_Disk
+import bloque
 
 def main():
     root = tk.Tk()
@@ -131,7 +132,6 @@ def main():
         gui_foil.createBlock(losses=False)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=False)
-        pass
     
     menu2.add_command(label="Run No Load Test", command = noLoadTest)
     
@@ -141,7 +141,6 @@ def main():
         gui_foil.createBlock(losses=True)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=True)
-        pass
     
     menu2.add_command(label="Run On Load Test", command = onLoadTest)
     
@@ -151,9 +150,13 @@ def main():
         gui_foil.createBlock(losses=True)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=True)
-        pass
     
     menu2.add_command(label="Run Service Test", command = serviceTest)
+
+    def saveBlocks():
+        bloque.guardaBloques()
+    
+    menu2.add_command(label="Save Blocks", command = saveBlocks)
 
     # bucle principal
 

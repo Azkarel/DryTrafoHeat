@@ -211,3 +211,5 @@ class Gui_Core:
         bl.pRad = 0.0
         bl.velAirChn = float(self.achv.get())
         bl.velAirExt = float(self.aev.get())
+        
+        bk.bloques.append(bl)

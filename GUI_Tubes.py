@@ -7,6 +7,7 @@ Created on Sun Nov 27 12:55:15 2022
 """
 
 import tkinter as tk
+import bloque as bk
 
 class Gui_Tubes:
     
@@ -70,4 +71,85 @@ class Gui_Tubes:
         self.em.set(lista[3])
                 
     def createBlock(self):
-        pass
+        
+        numEspBlk = float(self.tnt.get()) / (float(self.cchn.get()) + 1.0)
+        numEspAccum = 0.0
+        numEspBlkInicio = 0
+        numEspBlkFin = 0
+        
+        radialTotal =(float(self.iit.get()) + 
+                      float(self.tnt.get()) * (float(self.cw.get()) + float(self.ibt.get())) +
+                      float(self.cchn.get()) * float(self.ccht.get()) +
+                      float(self.oit.get()))
+        diamMedMecaTotal = (float(self.dim.get()) + radialTotal) / 1000.0
+        diamMedElecTotal = (float(self.dim.get()) +
+                            2 * float(self.iit.get()) + radialTotal -
+                            float(self.oit.get())) / 1000.0
+        radialTotal = radialTotal / 1000.0
+       
+        for n in range(int(self.cchn.get()) + 1):
+            bl = bk.Bloque()
+            
+            bk.contadorBloques = bk.contadorBloques + 1
+            bl.nInd = bk.contadorBloques
+            
+            bl.tAmb = 273.0 + 20.0
+            
+            bl.diamInt = (float(self.dim.get()) +
+                          float(self.iit.get()) +
+                          numEspBlkFin * (float(self.cw.get()) + float(self.ibt.get())) +
+                          n * int(self.ccht.get())) / 1000.0
+            
+            numEspBlkFin = round(numEspAccum + numEspBlk)
+            
+            bl.diamExt = (float(self.dim.get()) +
+                          float(self.iit.get()) +
+                          numEspBlkFin * (float(self.cw.get()) + float(self.ibt.get())) +
+                          n * int(self.ccht.get())) / 1000.0
+            
+            diamMedElec = (bl.diamInt + bl.diamExt) / 2.0
+            
+            if n == 0:
+                bl.diamInt = bl.diamInt - float(self.iit.get()) / 1000.0
+            if n == int(self.cchn.get()):
+                bl.diamExt = bl.diamExt + float(self.oit.get()) / 1000.0
+            diamMedMeca = (bl.diamInt + bl.diamExt) / 2.0
+            
+            bl.alt = float(self.ch.get()) / 1000.0
+            bl.areaInt = 3.141592 * bl.diamInt * bl.alt
+            bl.areaExt = 3.141592 * bl.diamExt * bl.alt
+            
+            bl.emisiv = float(self.em.get())
+            
+            a = diamMedElec / diamMedElecTotal
+            a = a * (numEspBlkFin - numEspBlkInicio) / float(self.tnt.get())
+            b = diamMedMeca / diamMedMecaTotal
+            b = b * (bl.diamExt - bl.diamExt) / radialTotal
+            
+            bl.pesoFe = 0.0
+            if self.cm.get() == "Cu":
+                bl.pesoCu = a * float(self.cbw.get()) / 3.0
+            else:
+                bl.pesoAl = a * float(self.cbw.get()) / 3.0
+            bl.pesoAisl = b * (float(self.tww.get()) - float(self.cbw.get())) / 3.0
+            
+            if losses:
+                bl.pkOhm = a * float(self.wol.get()) / 3.0
+                bl.pkAdi = a * float(self.wol.get()) / 3.0
+            
+            bl.tRef = float(self.rt.get())
+            bl.temp = 273.0 + 20.0
+            bl.incTemp = 1000.0
+            
+            bl.pk = 0.0
+            bl.pConv = 0.0
+            bl.pRad = 0.0
+            
+            bl.velAirInt = float(self.aiv.get())
+            bl.velAirChn = float(self.acchv.get())
+            bl.velAirExt = float(self.aev.get())
+
+            numEspBlkInicio = numEspBlkFin + 1
+            numEspAccum = numEspAccum + numEspBlk
+                    
+            bk.bloques.append(bl)
