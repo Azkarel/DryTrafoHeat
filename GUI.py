@@ -20,6 +20,7 @@ import GUI_Foil
 import GUI_Tubes
 import GUI_Disk
 import bloque as bk
+import calcula
 
 def main():
     root = tk.Tk()
@@ -133,10 +134,14 @@ def main():
         bk.bloques=[]
         
         mainData = gui_main.getData()
+        regimen = str(mainData[1])
+        
         gui_core.createBlock(losses=True)
         gui_foil.createBlock(losses=False)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=False)
+        
+        calcula.calculaCalentamiento(regimen)
     
     menu2.add_command(label="Run No Load Test", command = noLoadTest)
     
@@ -147,10 +152,14 @@ def main():
         bk.bloques=[]
 
         mainData = gui_main.getData()
+        regimen = str(mainData[1])
+        
         gui_core.createBlock(losses=False)
         gui_foil.createBlock(losses=True)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=True)
+        
+        calcula.calculaCalentamiento(regimen)
     
     menu2.add_command(label="Run On Load Test", command = onLoadTest)
     
@@ -161,10 +170,14 @@ def main():
         bk.bloques=[]
 
         mainData = gui_main.getData()
+        regimen = str(mainData[1])
+        
         gui_core.createBlock(losses=True)
         gui_foil.createBlock(losses=True)
         gui_tubes.createBlock()
         gui_disk.createBlock(losses=True)
+        
+        calcula.calculaCalentamiento(regimen)
     
     menu2.add_command(label="Run Service Test", command = serviceTest)
 
