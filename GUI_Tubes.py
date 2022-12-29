@@ -158,7 +158,7 @@ class Gui_Tubes:
     def createBlock(self):
         
         radialTubos = (int(self.tn.get()) * float(self.tt.get()) + 
-                      (int(self.tn.get()) - 1) * float(self.dbt.get())) / 1000.0
+                      (int(self.tn.get()) - 1) * float(self.dbt.get()))
         radialTubos = radialTubos / 1000.0
 
         diamMedTotal = (float(self.dic.get()) + float(self.doc.get())) / 2.0 / 1000.0
@@ -175,7 +175,7 @@ class Gui_Tubes:
                           2.0 * n * (float(self.tt.get()) + 
                                      float(self.dbt.get())) / 1000.0)
             
-            bl.diamExt = bl.diamInt + 2 * (float(self.tt.get()))
+            bl.diamExt = bl.diamInt + 2 * (float(self.tt.get())) / 1000.0
             
             diamMed = (bl.diamInt + bl.diamExt) / 2.0
             
@@ -189,7 +189,7 @@ class Gui_Tubes:
             bl.pesoCu = 0.0
             bl.pesoAl = 0.0
             bl.pesoAisl =(2.0 * 3.141592 * diamMed * bl.alt * 
-                          float(self.tt.get())) * float(self.td.get()) * 1000.0
+                          float(self.tt.get())) * float(self.td.get())
             
             bl.pkOhm = 0.0
             bl.pkAdi = 0.0

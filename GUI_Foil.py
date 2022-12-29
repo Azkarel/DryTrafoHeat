@@ -316,7 +316,7 @@ class Gui_Foil:
             
             if losses:
                 bl.pkOhm = a * float(self.wol.get()) / 3.0
-                bl.pkAdi = a * float(self.wol.get()) / 3.0
+                bl.pkAdi = a * float(self.wel.get()) / 3.0
             
             bl.tRef = float(self.rt.get())
             bl.temp = 273.0 + 20.0
